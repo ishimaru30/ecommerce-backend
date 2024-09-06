@@ -19,7 +19,8 @@ def register():
 @user_bp.route('/login', methods=['POST'])
 def login():
     data = request.json
-    if user_use_case.login_user(data['username'], data['password']):
-        return jsonify({'message': 'Login successful'}), 200
+    token = user_use_case.login_user(data['username'], data['password'])
+    if token:
+        return jsonify({'token': token}), 200
     else:
         return jsonify({'error': 'Invalid credentials'}), 401

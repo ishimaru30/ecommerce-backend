@@ -1,6 +1,7 @@
 from app.repository.user_repository import UserRepository
 from app.domain.entities.user import User
 from app.infrastructure.hashing import hash_password, verify_password
+from app.infrastructure.jwt_handler import encode_auth_token
 
 class UserUseCase:
     def __init__(self, user_repo: UserRepository):
@@ -16,5 +17,6 @@ class UserUseCase:
     def login_user(self, username, password):
         user = self.user_repo.get_user(username)
         if user and verify_password(password, user.password_hash):
-            return True
-        return False
+            token = encode_auth_token(user.username)
+            return token  # Return the JWT token upon successful login
+        return None
