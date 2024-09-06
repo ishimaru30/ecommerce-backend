@@ -1,0 +1,20 @@
+from app.repository.user_repository import UserRepository
+from app.domain.entities.user import User
+from app.infrastructure.hashing import hash_password, verify_password
+
+class UserUseCase:
+    def __init__(self, user_repo: UserRepository):
+        self.user_repo = user_repo
+
+    def register_user(self, username, password):
+        if self.user_repo.get_user(username):
+            raise ValueError("User already exists")
+        password_hash = hash_password(password)
+        user = User(username=username, password_hash=password_hash)
+        self.user_repo.add_user(user)
+
+    def login_user(self, username, password):
+        user = self.user_repo.get_user(username)
+        if user and verify_password(password, user.password_hash):
+            return True
+        return False
