@@ -12,6 +12,9 @@ def get_db():
     return g.db
 
 class ProductRepository:
+    def __init__(self, db_path='ecommerce.db'):  # Default to the file database
+        self.db_path = db_path
+        
     def add_product(self, product: Product):
         conn = get_db()
         conn.execute('INSERT INTO products (name, description, price, stock) VALUES (?, ?, ?, ?)',

@@ -12,6 +12,9 @@ def get_db():
     return g.db
 
 class UserRepository:
+    def __init__(self, db_path='ecommerce.db'):  # Default to the file database
+        self.db_path = db_path
+        
     def add_user(self, user: User):
         conn = get_db()
         conn.execute('INSERT INTO users (username, password_hash, is_admin) VALUES (?, ?, ?)',

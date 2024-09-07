@@ -11,6 +11,9 @@ def get_db():
     return g.db
 
 class OrderRepository:
+    def __init__(self, db_path='ecommerce.db'):  # Default to the file database
+        self.db_path = db_path
+        
     def save_order(self, user_id, product_data):
         conn = get_db()
         conn.execute('INSERT INTO orders (user_id, product_data) VALUES (?, ?)', (user_id, product_data))
@@ -23,3 +26,11 @@ class OrderRepository:
         for row in cursor:
             orders.append({'id': row[0], 'user_id': row[1], 'product_data': row[2]})
         return orders
+    
+    def get_cart_items(self, user_id):
+        return self.cart.get(user_id, [])
+
+    def add_to_cart(self, user_id, cart_items):
+        if user_id not in self.cart:
+            self.cart[user_id] = []
+        self.cart[user_id].extend(cart_items)
