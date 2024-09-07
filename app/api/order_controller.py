@@ -15,8 +15,9 @@ def place_order(current_user):
     data = request.json
     user_id = current_user  # Extracted from the token
     cart_items = data['cart_items']
-    order_use_case.place_order(user_id, cart_items)
-    return jsonify({'message': 'Order placed successfully'}), 201
+    order_id = order_use_case.place_order(user_id, cart_items)  # Return the order ID
+    return jsonify({'message': 'Order placed successfully', 'order_id': order_id}), 201
+
 
 # View Cart Endpoint
 @order_bp.route('/cart', methods=['GET'])

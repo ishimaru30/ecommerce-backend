@@ -11,12 +11,12 @@ class UserUseCase:
         if self.user_repo.get_user(username):
             raise ValueError("User already exists")
         password_hash = hash_password(password)
-        user = User(username=username, password_hash=password_hash)
+        user = User(id=None, username=username, password_hash=password_hash)
         self.user_repo.add_user(user)
 
     def login_user(self, username, password):
         user = self.user_repo.get_user(username)
         if user and verify_password(password, user.password_hash):
-            token = encode_auth_token(user.username)
-            return token  # Return the JWT token upon successful login
+            token = encode_auth_token(user.id) 
+            return token
         return None

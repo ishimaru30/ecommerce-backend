@@ -99,6 +99,12 @@ ecommerce-backend/
    ```bash
    python main.py
    ```
+3.1 **Run Tests**:
+   ```bash
+   python3 -m unittest discover -s tests
+   ```
+
+   The application will be accessible at `http://localhost:8080`.
 
 4. **Run with Docker**:
    To run the application locally using Docker:

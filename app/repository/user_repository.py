@@ -1,15 +1,5 @@
-import sqlite3
-from flask import g
 from app.domain.entities.user import User
-
-DATABASE = 'ecommerce.db'
-
-def get_db():
-    if 'db' not in g:
-        g.db = sqlite3.connect(DATABASE)
-        g.db.execute('''CREATE TABLE IF NOT EXISTS users
-                            (id INTEGER PRIMARY KEY, username TEXT, password_hash TEXT, is_admin INTEGER)''')
-    return g.db
+from app.infrastructure.database import get_db
 
 class UserRepository:
     def __init__(self, db_path='ecommerce.db'):  # Default to the file database
@@ -26,5 +16,14 @@ class UserRepository:
         cursor = conn.execute('SELECT * FROM users WHERE username = ?', (username,))
         row = cursor.fetchone()
         if row:
-            return User(username=row[1], password_hash=row[2], is_admin=bool(row[3]))
+            return User(id=row[0], username=row[1], password_hash=row[2], is_admin=bool(row[3]))
+        return None
+
+    
+    def get_user_by_id(self, user_id):
+        conn = get_db()
+        cursor = conn.execute('SELECT * FROM users WHERE id = ?', (user_id,))
+        row = cursor.fetchone()
+        if row:
+            return User(id=row['id'], username=row['username'], password_hash=row['password_hash'], is_admin=bool(row['is_admin']))
         return None
