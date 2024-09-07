@@ -6,9 +6,9 @@ DATABASE = 'ecommerce.db'
 def get_db():
     if 'db' not in g:
         g.db = sqlite3.connect(DATABASE)
-        g.db.row_factory = sqlite3.Row  # This allows for easier row access by column name
+        g.db.row_factory = sqlite3.Row 
 
-        # Create tables if they don't exist, with IDs
+        # Create tables if they don't exist
         g.db.execute('''
             CREATE TABLE IF NOT EXISTS users (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,

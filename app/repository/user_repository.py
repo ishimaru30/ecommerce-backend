@@ -2,7 +2,7 @@ from app.domain.entities.user import User
 from app.infrastructure.database import get_db
 
 class UserRepository:
-    def __init__(self, db_path='ecommerce.db'):  # Default to the file database
+    def __init__(self, db_path='ecommerce.db'): 
         self.db_path = db_path
         
     def add_user(self, user: User):

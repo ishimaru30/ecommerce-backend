@@ -7,9 +7,9 @@ from app.infrastructure.database import get_db, close_db
 class TestOrderUseCase(unittest.TestCase):
     def setUp(self):
         # Create a Flask app and push the context for each test
-        self.app = create_app()  # Create a Flask app instance
-        self.app_context = self.app.app_context()  # Create app context
-        self.app_context.push()  # Push the context to use Flask's 'g'
+        self.app = create_app() 
+        self.app_context = self.app.app_context()  
+        self.app_context.push()  
 
         # Set up the order repository and use case with an in-memory database
         self.order_repo = OrderRepository()

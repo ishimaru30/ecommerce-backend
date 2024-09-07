@@ -11,7 +11,7 @@ order_use_case = OrderUseCase(order_repo)
 @order_bp.route('/order', methods=['POST'])
 @token_required
 def place_order(current_user):
-    data = request.get_json()  # Get the request body as JSON
+    data = request.get_json()  
     if 'cart_items' not in data:
         return jsonify({'error': 'Missing cart_items in request body'}), 400
 
@@ -31,7 +31,6 @@ def get_cart(current_user):
 
     return jsonify({'orders': orders}), 200
 
-# View Orders Endpoint
 @order_bp.route('/orders', methods=['GET'])
 @token_required
 def view_orders(current_user):

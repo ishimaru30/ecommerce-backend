@@ -7,14 +7,14 @@ def token_required(f):
     def decorated(*args, **kwargs):
         token = None
         if 'Authorization' in request.headers:
-            token = request.headers['Authorization'].split(" ")[1]  # Bearer token
+            token = request.headers['Authorization'].split(" ")[1]  
 
         if not token:
             return jsonify({'message': 'Token is missing!'}), 403
 
         try:
             current_user = decode_auth_token(token)
-            if isinstance(current_user, str):  # If it's a string, there's an error
+            if isinstance(current_user, str):  
                 return jsonify({'message': current_user}), 403
         except:
             return jsonify({'message': 'Token is invalid!'}), 403
