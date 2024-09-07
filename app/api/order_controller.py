@@ -8,24 +8,28 @@ order_bp = Blueprint('order', __name__)
 order_repo = OrderRepository()
 order_use_case = OrderUseCase(order_repo)
 
-# Place Order Endpoint
 @order_bp.route('/order', methods=['POST'])
 @token_required
 def place_order(current_user):
-    data = request.json
-    user_id = current_user  # Extracted from the token
+    data = request.get_json()  # Get the request body as JSON
+    if 'cart_items' not in data:
+        return jsonify({'error': 'Missing cart_items in request body'}), 400
+
     cart_items = data['cart_items']
-    order_id = order_use_case.place_order(user_id, cart_items)  # Return the order ID
-    return jsonify({'message': 'Order placed successfully', 'order_id': order_id}), 201
+    user_id = current_user
+    order_use_case.place_order(user_id, cart_items)
+    return jsonify({'message': 'Order placed successfully'}), 201
 
-
-# View Cart Endpoint
 @order_bp.route('/cart', methods=['GET'])
 @token_required
-def view_cart(current_user):
-    user_id = current_user  # Extracted from the token
-    cart_items = order_use_case.get_cart_items(user_id)
-    return jsonify(cart_items), 200
+def get_cart(current_user):
+    user_id = current_user    
+    orders = order_use_case.get_orders_by_user(user_id)
+    
+    if not orders:
+        return jsonify({'message': 'Cart is empty'}), 200
+
+    return jsonify({'orders': orders}), 200
 
 # View Orders Endpoint
 @order_bp.route('/orders', methods=['GET'])

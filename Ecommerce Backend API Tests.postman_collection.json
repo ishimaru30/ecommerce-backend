@@ -77,7 +77,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"name\": \"Test Product\",\n  \"description\": \"A test product\",\n  \"price\": 10.99,\n  \"stock\": 5\n}"
+					"raw": "{\n  \"name\": \"Test Product 4\",\n  \"description\": \"A test product 3\",\n  \"price\": 10.99,\n  \"stock\": 5\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8080/product/products",
@@ -122,7 +122,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MjU3NjU4MzgsImlhdCI6MTcyNTY3OTQzOCwic3ViIjoidGVzdHVzZXIzIn0.IHgzM7LXdxjPyCj7U6ZwkOe6h4DEKdbGKohuwKI4IOQ",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MjU4MzExOTYsImlhdCI6MTcyNTc0NDc5Niwic3ViIjoxN30.WuDwpQxk9SyFPEqYKle95kyMqUeHgESp3d8fIhBbivE",
 							"type": "string"
 						}
 					]
@@ -136,7 +136,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"user_id\": 1,\n  \"product_id\": 1,\n  \"quantity\": 2\n}"
+					"raw": "{\n    \"user_id\": 1,\n    \"cart_items\": [\n        {\n            \"product_id\": 1,\n            \"quantity\": 2\n        }\n    ]\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8080/order/order",
@@ -161,7 +161,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MjU3NjY1NjQsImlhdCI6MTcyNTY4MDE2NCwic3ViIjoidGVzdHVzZXIzIn0.VZwO9TPXW6g_Ug80qFgsG4-7kuxP3YNCu2VlhSymQ-k",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MjU4MzExOTYsImlhdCI6MTcyNTc0NDc5Niwic3ViIjoxN30.WuDwpQxk9SyFPEqYKle95kyMqUeHgESp3d8fIhBbivE",
 							"type": "string"
 						}
 					]
@@ -169,7 +169,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/order/cart?user_id=1",
+					"raw": "http://localhost:8080/order/cart",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -178,12 +178,6 @@
 					"path": [
 						"order",
 						"cart"
-					],
-					"query": [
-						{
-							"key": "user_id",
-							"value": "1"
-						}
 					]
 				}
 			},
@@ -192,6 +186,16 @@
 		{
 			"name": "Place Order",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MjU4MzExOTYsImlhdCI6MTcyNTc0NDc5Niwic3ViIjoxN30.WuDwpQxk9SyFPEqYKle95kyMqUeHgESp3d8fIhBbivE",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [
 					{
@@ -201,16 +205,17 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"user_id\": 1\n}"
+					"raw": "{\n    \"cart_items\": [\n        {\n            \"product_id\": 1,\n            \"quantity\": 2\n        }\n    ]\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/order",
+					"raw": "http://localhost:8080/order/order",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
+						"order",
 						"order"
 					]
 				}
@@ -220,22 +225,34 @@
 		{
 			"name": "View Orders",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MjU4MzExOTYsImlhdCI6MTcyNTc0NDc5Niwic3ViIjoxN30.WuDwpQxk9SyFPEqYKle95kyMqUeHgESp3d8fIhBbivE",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/orders?user_id=1",
+					"raw": "http://localhost:8080/order/orders",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
+						"order",
 						"orders"
 					],
 					"query": [
 						{
 							"key": "user_id",
-							"value": "1"
+							"value": "1",
+							"disabled": true
 						}
 					]
 				}
