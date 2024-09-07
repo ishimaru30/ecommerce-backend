@@ -78,7 +78,7 @@ ecommerce-backend/
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/your-repo/ecommerce-backend.git
+   git clone https://github.com/datagopher/ecommerce-backend.git
    cd ecommerce-backend
    ```
 
@@ -113,28 +113,12 @@ ecommerce-backend/
       docker run -p 8080:8080 ecommerce-backend
       ```
 
+   3. **Or Run the Docker Script**:
+      ```bash
+      sh build_local.sh
+      ```
+
    Your application will now be accessible at `http://localhost:8080`.
-
-### Deploy to Google Cloud Run
-
-If you want to deploy this project to Google Cloud Run:
-
-1. **Build and push your Docker image to Google Container Registry**:
-   ```bash
-   docker build -t gcr.io/[PROJECT-ID]/ecommerce-backend .
-   docker push gcr.io/[PROJECT-ID]/ecommerce-backend
-   ```
-
-2. **Deploy the container to Cloud Run**:
-   ```bash
-   gcloud run deploy ecommerce-backend \
-       --image gcr.io/[PROJECT-ID]/ecommerce-backend \
-       --platform managed \
-       --region us-central1 \
-       --allow-unauthenticated
-   ```
-
-3. Access the service via the provided URL.
 
 ---
 
