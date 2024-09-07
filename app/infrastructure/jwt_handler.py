@@ -3,7 +3,7 @@ import datetime
 
 SECRET_KEY = '5c750dfc0cfd0b623427f891a59a2c10ad132374d9375efedbe567c830983d02' 
 
-def encode_auth_token(user_id):
+def encode_auth_token(user_id, is_admin=False):
     """
     Generates the Auth Token using the user's ID.
     """
@@ -11,7 +11,8 @@ def encode_auth_token(user_id):
         payload = {
             'exp': datetime.datetime.now(datetime.UTC) + datetime.timedelta(days=1),  # Use timezone-aware UTC datetime
             'iat': datetime.datetime.now(datetime.UTC),  # Use timezone-aware UTC datetime
-            'sub': user_id
+            'sub': user_id,
+            'is_admin': is_admin
         }
         return jwt.encode(payload, SECRET_KEY, algorithm='HS256')
     except Exception as e:
