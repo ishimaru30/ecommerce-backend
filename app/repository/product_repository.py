@@ -26,3 +26,16 @@ class ProductRepository:
         if row:
             return Product(id=row['id'], name=row['name'], description=row['description'], price=row['price'], stock=row['stock'])
         return None
+    
+    def update_product(self, product_id, updated_fields):
+        conn = get_db()
+        set_clause = ', '.join(f"{key} = ?" for key in updated_fields)
+        values = list(updated_fields.values()) + [product_id]
+        query = f"UPDATE products SET {set_clause} WHERE id = ?"
+        conn.execute(query, values)
+        conn.commit()
+
+    def delete_product(self, product_id):
+        conn = get_db()
+        conn.execute('DELETE FROM products WHERE id = ?', (product_id,))
+        conn.commit()

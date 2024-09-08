@@ -7,11 +7,11 @@ class UserUseCase:
     def __init__(self, user_repo: UserRepository):
         self.user_repo = user_repo
 
-    def register_user(self, username, password):
+    def register_user(self, username, password, is_admin=False):
         if self.user_repo.get_user(username):
             raise ValueError("User already exists")
         password_hash = hash_password(password)
-        user = User(id=None, username=username, password_hash=password_hash)
+        user = User(id=None, username=username, password_hash=password_hash, is_admin=is_admin)
         self.user_repo.add_user(user)
 
     def login_user(self, username, password):

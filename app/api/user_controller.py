@@ -9,12 +9,17 @@ user_use_case = UserUseCase(user_repo)
 
 @user_bp.route('/register', methods=['POST'])
 def register():
-    data = request.json
+    data = request.get_json()
+    username = data.get('username')
+    password = data.get('password')
+    is_admin = data.get('is_admin', False) 
+    
     try:
-        user_use_case.register_user(data['username'], data['password'])
+        user_use_case.register_user(username, password, is_admin)
         return jsonify({'message': 'User registered successfully'}), 201
     except ValueError as e:
         return jsonify({'error': str(e)}), 400
+
 
 @user_bp.route('/login', methods=['POST'])
 def login():
