@@ -78,7 +78,7 @@ ecommerce-backend/
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/datagopher/ecommerce-backend.git
+   git clone https://github.com/ishimaru30/ecommerce-backend.git
    cd ecommerce-backend
    ```
 
