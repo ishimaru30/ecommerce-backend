@@ -14,3 +14,6 @@ class ProductUseCase:
 
     def delete_product(self, product_id):
         self.product_repo.delete_product(product_id)
+    
+    def get_products(self):
+        return self.product_repo.get_all_products()

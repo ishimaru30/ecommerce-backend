@@ -220,6 +220,8 @@ This will return an error since the token is missing:
 }
 ```
 
+### 7. **Postman collection**
+You can also import the provided Postman collection to test the API endpoints.
 ---
 
 ## Notes

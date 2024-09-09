@@ -51,3 +51,21 @@ def edit_product(product_id):
 def delete_product(product_id):
     product_use_case.delete_product(product_id)
     return jsonify({'message': 'Product deleted successfully'}), 200
+
+# Get all products
+@product_bp.route('/products', methods=['GET'])
+def get_products():
+    products = product_use_case.get_products()
+    
+    # Convert each Product object to a dictionary
+    products_list = []
+    for product in products:
+        products_list.append({
+            'id': product.id,
+            'name': product.name,
+            'description': product.description,
+            'price': product.price,
+            'stock': product.stock
+        })
+    
+    return jsonify(products_list), 200
